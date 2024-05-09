@@ -24,6 +24,8 @@
  */
 package com.iluwatar.embedded.value;
 
+import static java.sql.PreparedStatement.RETURN_GENERATED_KEYS;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,6 +34,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
+
+
 
 /**
  * Communicates with H2 database with the help of JDBC API.
@@ -68,7 +72,7 @@ public class DataSource implements DataSourceInterface {
   public boolean createSchema() {
     try (Statement createschema = conn.createStatement()) {
       createschema.execute(CREATE_SCHEMA);
-      insertIntoOrders = conn.prepareStatement(INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS);
+      insertIntoOrders = conn.prepareStatement(INSERT_ORDER, RETURN_GENERATED_KEYS);
       getschema = conn.createStatement();
       queryOrders = conn.createStatement();
       removeorder = conn.prepareStatement(REMOVE_ORDER);
@@ -141,7 +145,6 @@ public class DataSource implements DataSourceInterface {
             rSet.getString(6)));
         ordersList.add(order);
       }
-      rSet.close();
     } catch (SQLException e) {
       LOGGER.error(e.getMessage(), e.getCause());
     }
@@ -166,7 +169,6 @@ public class DataSource implements DataSourceInterface {
             rSet.getString(5), rSet.getString(6));
         order = new Order(rSet.getInt(1), rSet.getString(2), rSet.getString(3), address);
       }
-      rSet.close();
     } catch (Exception e) {
       LOGGER.error(e.getLocalizedMessage(), e.getCause());
     }
@@ -192,7 +194,7 @@ public class DataSource implements DataSourceInterface {
   }
 
   @Override
-  public boolean deleteSchema() throws Exception {
+  public boolean deleteSchema()  {
     try {
       deleteschema.execute(DELETE_SCHEMA);
       queryOrders.close();

@@ -2992,7 +2992,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/44934142?v=4",
       "profile": "https://github.com/luismateoh",
       "contributions": [
-        "translation"
+        "translation",
+        "review"
       ]
     },
     {
@@ -3064,7 +3065,44 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/53974843?v=4",
       "profile": "https://github.com/DavidMedinaO",
       "contributions": [
-        "translation"
+        "translation",
+        "review"
+      ]
+    },
+    {
+      "login": "Romo4ka-bot",
+      "name": "Roman Leontev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61774094?v=4",
+      "profile": "https://github.com/Romo4ka-bot",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Ehspresso",
+      "name": "Riley",
+      "avatar_url": "https://avatars.githubusercontent.com/u/144370752?v=4",
+      "profile": "https://github.com/Ehspresso",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "k1w1dev",
+      "name": "k1w1dev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/121696782?v=4",
+      "profile": "https://github.com/k1w1dev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dev-yugantar",
+      "name": "dev-yugantar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/153066190?v=4",
+      "profile": "https://github.com/dev-yugantar",
+      "contributions": [
+        "code"
       ]
     }
   ],
