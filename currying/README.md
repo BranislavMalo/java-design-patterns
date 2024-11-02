@@ -1,27 +1,29 @@
 ---
-title: Currying
+title: "Currying Pattern in Java: Enhancing Function Flexibility and Reusability"
+shortTitle: Currying
+description: "Learn about currying in Java, a technique to simplify functions by breaking them into a sequence of single-argument functions. Discover its applications, benefits, and examples in this comprehensive guide."
 category: Functional
 language: en
 tag:
-    - Code simplification
-    - Functional decomposition
-    - Generic
-    - Immutable
+  - Code simplification
+  - Functional decomposition
+  - Generic
+  - Immutable
 ---
 
 ## Also known as
 
 * Partial Function Application
 
-## Intent
+## Intent of Currying Design Pattern
 
-Currying decomposes a function that takes multiple arguments into a sequence of functions that each take a single argument. It helps in creating a higher-order function by partial application of its arguments.
+Currying decomposes a function that takes multiple arguments into a sequence of functions that each take a single argument. This technique is integral in functional programming, enabling the creation of higher-order functions through partial application of its arguments. Using currying in Java can lead to more modular, reusable, and maintainable code.
 
-## Explanation
+## Detailed Explanation of Currying Pattern with Real-World Examples
 
 Real-world example
 
-> Currying in programming can be compared to an assembly line in a factory. Imagine a car manufacturing process where each station on the assembly line performs a specific task, such as installing the engine, painting the car, and adding the wheels. Each station takes a partially completed car and performs a single operation before passing it to the next station. Similarly, in currying, a function that requires multiple arguments is broken down into a series of functions, each taking a single argument and returning another function until all arguments are provided. This step-by-step processing simplifies complex tasks by dividing them into manageable, sequential operations.
+> Currying in programming can be compared to an assembly line in a factory. Imagine a car manufacturing process where each station on the assembly line performs a specific task, such as installing the engine, painting the car, and adding the wheels. Each station takes a partially completed car and performs a single operation before passing it to the next station. Similarly, in currying, a function that requires multiple arguments is broken down into a series of functions, each taking a single argument and returning another function until all arguments are provided. This step-by-step processing simplifies complex tasks by dividing them into manageable, sequential operations, which is especially useful in Java functional programming.
 
 In plain words
 
@@ -31,7 +33,7 @@ Wikipedia says
 
 > In mathematics and computer science, currying is the technique of translating a function that takes multiple arguments into a sequence of families of functions, each taking a single argument.
 
-**Programmatic example**
+## Programmatic example of Currying Pattern in Java
 
 Consider a librarian who wants to populate their library with books. The librarian wants functions which can create books corresponding to specific genres and authors. Currying makes this possible by writing a curried book builder function and utilising partial application.
 
@@ -51,7 +53,9 @@ public class Book {
         this.publicationDate = publicationDate;
     }
 }
+```
 
+```java
 public enum Genre {
     FANTASY,
     HORROR,
@@ -70,9 +74,6 @@ Book createBook(Genre genre, String author, String title, LocalDate publicationD
 However, what if we only wanted to create books from the `FANTASY` genre? Passing the `FANTASY` parameter with each method call would be repetitive. Alternatively, we could define a new method specifically for creating `FANTASY` books, but it would be impractical to create a separate method for each genre. The solution is to use a curried function.
 
 ```java
-/**
- * Curried book builder/creator function.
- */
 static Function<Genre, Function<String, Function<String, Function<LocalDate, Book>>>> book_creator
         = bookGenre
         -> bookAuthor
@@ -90,11 +91,6 @@ Function<String, Function<String, Function<LocalDate, Book>>> fantasyBookFunc = 
 Unfortunately, the type signature of `BOOK_CREATOR` and `fantasyBookFunc` are difficult to read and understand. We can improve this by using the [builder pattern](https://java-design-patterns.com/patterns/builder/) and functional interfaces.
 
 ```java
-
-/**
- * Implements the builder pattern using functional interfaces to create a more readable book
- * creator function. This function is equivalent to the BOOK_CREATOR function.
- */
 public static AddGenre builder() {
     return genre
             -> author
@@ -103,30 +99,18 @@ public static AddGenre builder() {
             -> new Book(genre, author, title, publicationDate);
 }
 
-/**
- * Functional interface which adds the genre to a book.
- */
 public interface AddGenre {
     Book.AddAuthor withGenre(Genre genre);
 }
 
-/**
- * Functional interface which adds the author to a book.
- */
 public interface AddAuthor {
     Book.AddTitle withAuthor(String author);
 }
 
-/**
- * Functional interface which adds the title to a book.
- */
 public interface AddTitle {
     Book.AddPublicationDate withTitle(String title);
 }
 
-/**
- * Functional interface which adds the publication date to a book.
- */
 public interface AddPublicationDate {
     Book withPublicationDate(LocalDate publicationDate);
 }
@@ -202,29 +186,26 @@ Program output:
 09:04:52.506 [main] INFO com.iluwatar.currying.App -- Book{genre=SCIFI, author='Isaac Asimov', title='Foundation', publicationDate=1942-05-01}
 ```
 
-## Class diagram
+## When to Use the Currying Pattern in Java
 
-![Currying](./etc/currying.urm.png)
-
-## Applicability
-
-* When functions need to be called with some arguments preset.
+* When functions need to be called with some arguments preset in Java.
 * In functional programming languages or paradigms to simplify functions that take multiple arguments.
-* To improve code reusability and composability by breaking down functions into simpler, unary functions.
+* To improve code reusability and composability by breaking down functions into simpler, unary functions, enhancing the modularity of Java applications.
 
-## Tutorials
+## Currying Pattern Java Tutorials
 
 * [Currying in Java (Baeldung)](https://www.baeldung.com/java-currying)
 * [What Is Currying in Programming (Towards Data Science)](https://towardsdatascience.com/what-is-currying-in-programming-56fd57103431#:~:text=Currying%20is%20helpful%20when%20you,concise%2C%20and%20more%20readable%20solution.)
 * [Why the fudge should I use currying? (DailyJS)](https://medium.com/dailyjs/why-the-fudge-should-i-use-currying-84e4000c8743)
 
-## Known uses
+## Real-World Applications of Currying Pattern in Java
 
 * Functional programming languages like Haskell, Scala, and JavaScript.
+* Java programming, especially with lambda expressions and streams introduced in Java 8.
 * Event handling in UIs where a function with specific parameters needs to be triggered upon an event.
 * APIs that require configuration with multiple parameters.
 
-## Consequences
+## Benefits and Trade-offs of Currying Pattern
 
 Benefits:
 
@@ -239,13 +220,13 @@ Trade-offs:
 * Can be less intuitive for developers unfamiliar with functional programming concepts.
 * As shown in the programmatic example above, curried functions with several parameters have a cumbersome type signature in Java.
 
-## Related patterns
+## Related Java Design Patterns
 
 * Function Composition: Currying is often used in conjunction with function composition to enable more readable and concise code.
 * [Decorator](https://java-design-patterns.com/patterns/decorator/): While not the same, currying shares the decorator pattern's concept of wrapping functionality.
 * [Factory](https://java-design-patterns.com/patterns/factory/): Currying can be used to create factory functions that produce variations of a function with certain arguments preset.
 
-## Credits
+## References and Credits
 
 * [Functional Programming in Java: Harnessing the Power Of Java 8 Lambda Expressions](https://amzn.to/3TKeZPD)
 * [Java 8 in Action: Lambdas, Streams, and functional-style programming](https://amzn.to/3J6vEaW)
